@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<table id="municipalities-table">
+		<thead>
+			<tr>
+				<th>Municipality</th>
+				<th>Population</th>
+			</tr>
+		</thead>
+		<tbody>
+			<script>fetch('https://statfin.stat.fi/PxWeb/sq/4e244893-7761-4c4f-8e55-7a8d41d86eff').then(function (response) {
+  return response.json();
+}).then(function (data) {
+  var municipalities = data.dataset.dimension.Alue.category.label;
+  var populations = data.dataset.value;
+  for (var i = 0; i < municipalities.length; i++) {
+    var row = document.createElement('tr');
+    var municipalityCell = document.createElement('td');
+    var populationCell = document.createElement('td');
+    municipalityCell.textContent = municipalities[i];
+    populationCell.textContent = populations[i];
+    row.appendChild(municipalityCell);
+    row.appendChild(populationCell);
+    document.querySelector('#municipalities-table tbody').appendChild(row);
+  }
+}).catch(function (error) {
+  return console.log(error);
+});</script>
+		</tbody>
+	</table>
+</body>
+</html>
